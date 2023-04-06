@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+    /* count me */
+        #count1 {
+            color: white;
+            z-index: 100; 
+            font-size: 18px; 
+            position: fixed; 
+            top: 70px; 
+            right: 30px; 
+            border-radius: 
+            40px; 
+            background: #7899e7; 
+            width: 50px; 
+            height: 50px; 
+            text-align: center; 
+            line-height: 50px;
+        }
+
+        #count2 {
+            color: white; 
+            z-index: 101; 
+            font-size: 18px; 
+            position: fixed; 
+            top: 123px; 
+            right: 30px; 
+            border-radius: 40px; 
+            background: rgb(243, 159, 159); 
+            width: 50px; 
+            height: 50px; 
+            text-align: center; 
+            line-height: 50px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <p id="time">time</p>
+
+    <h1>종강까지 남은 시간</h1>
+    <h2 id="d-day"></h2>
+
+    <script>
+        //객체. 메서드(매개인자);
+        //var num = 0;
+        //let myDate = new Date();
+        let dayArray = ["일", "월", "화", "수", "목", "금", "토" ];
+        let myDate;
+        let year;
+        let month;
+        let date;
+        let day;
+        let hour;
+        let minute;
+        //console.log(myDate);
+        //console.log(document.getElementById("time"));
+
+        // 자바스크립트로 반복 실행
+        setInterval(function(){
+            //console.log("hi");
+            //console.log("num++");
+            myDate = new Date();
+            year = myDate.getFullYear() + "년";
+            month = myDate.getMonth() + 1 + "월";
+            date = myDate.getDate() + "일";
+            day = dayArray[myDate.getDay()] + "요일";
+            hour = myDate.getHours() + ":";
+            minute = myDate.getMinutes();
+            //console.log(myDate.getFullYear());
+            document.getElementById("time").innerText = year + month + date + day + hour + minute;
+            }, 1000);
+    </script>
+
+    <!-- count -->
+    <script>
+        // 예시: 현재 날짜와 2023년 5월 31일 사이의 시간 차이 계산
+        const now = new Date();
+        const futureDate = new Date('2023-06-21');
+        let timeDiff = futureDate.getTime() - now.getTime();
+        // 시간 차이를 일 단위로 변환
+        let daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+        // 새로운 div 요소 만들기
+        var newDiv1 = document.createElement("div");
+        var newDiv2 = document.createElement("div");
+        // div에 텍스트 추가하기
+        newDiv1.id = "count1";
+        newDiv2.id = "count2";
+        var divText1 = document.createTextNode("D+"+ (100 - daysDiff));
+        var divText2 = document.createTextNode("D-"+ (daysDiff));
+        newDiv1.appendChild(divText1);
+        newDiv2.appendChild(divText2);
+        // body 요소에 새로운 div 추가하기
+        document.body.appendChild(newDiv1);
+        document.body.appendChild(newDiv2);
+    </script>
+
+    <script>
+        const remainTime = document.querySelector("#d-day");
+
+        function diffDay() {
+            const masTime = new Date("2023-06-21");
+            const todayTime = new Date();
+
+            const diff = masTime - todayTime;
+
+            const diffDay = Math.floor(diff / (1000*60*60*24));
+            const diffHour = Math.floor((diff / (1000*60*60)) % 24);
+            const diffMin = Math.floor((diff / (1000*60)) % 60);
+            const diffSec = Math.floor(diff / 1000 % 60);
+
+            remainTime.innerText = `${diffDay}일 ${diffHour}시간 ${diffMin}분 ${diffSec}초`; 
+            }
+
+            diffDay();
+            setInterval(diffDay, 1000);
+    </script>
+</body>
+
+</html>
